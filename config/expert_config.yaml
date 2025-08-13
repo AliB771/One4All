@@ -1,0 +1,22 @@
+# Expert Configuration
+experts:
+  expert_1:
+    name: "expert_domain_1"
+    lora_weights_path: "models/experts/expert_1/lora_weights/"
+    specialization: "domain_1"
+    active: true
+    
+  expert_2:
+    name: "expert_domain_2" 
+    lora_weights_path: "models/experts/expert_2/lora_weights/"
+    specialization: "domain_2"
+    active: true
+
+lora:
+  rank: 16
+  alpha: 32
+  dropout: 0.1
+  
+base_model:
+  name: "base_transformer_model"
+  path: "models/base_model/"
