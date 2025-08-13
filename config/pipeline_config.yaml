@@ -1,0 +1,20 @@
+# Pipeline Configuration
+pipeline:
+  name: "router_expert_pipeline"
+  max_batch_size: 16
+  timeout: 30
+  
+routing:
+  strategy: "top_k"
+  k: 2
+  threshold: 0.5
+  
+expert_management:
+  lazy_loading: true
+  cache_size: 2
+  unload_after_idle: 300  # seconds
+  
+monitoring:
+  log_level: "INFO"
+  metrics_enabled: true
+  performance_tracking: true
