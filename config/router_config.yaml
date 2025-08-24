@@ -1,21 +1,220 @@
-# Router Configuration
-model:
-  name: "router_model"
-  architecture: "transformer"
-  hidden_size: 768
-  num_experts: 8
-  top_k: 2
+# # Router Configuration
 
-training:
-  batch_size: 32
-  learning_rate: 0.001
-  epochs: 100
-  save_steps: 1000
-  
-data:
-  train_path: "data/training/router_data.json"
-  val_path: "data/validation/router_data.json"
-  
-paths:
-  model_save_path: "models/router/trained/"
-  checkpoint_path: "models/router/checkpoints/"
+model :
+  BASE_MODEL: "HooshvareLab/bert-base-parsbert-uncased"
+  DeviceMap: "auto"
+  NumLabels: 4
+  OUTPUT_DIR: "output_dir"
+  BasePath: "data"
+  DelTempFile: False
+  Train:
+    BATCH_SIZE: 32
+    GRAD_ACCUM: 1
+    EPOCHS: 3
+    LR: 5e-5
+    FP16: True
+
+Dataset:
+  DatasetPath:
+    Train: "data\training\router\training_dataset.parquet"
+    Validation: "data\validation\router\validation_dataset.parquet"
+    Test: "data\test\router\test_dataset.parquet"
+
+  Tokenizer:
+    TokenizerName: "HooshvareLab/bert-base-parsbert-uncased"
+    MaxLength: 2024
+    Padding: "max_length"
+    NumProc: 4
+    RemoveColumns: ["chunk","title","category"]
+    Batched: True
+
+DataProcessing:  
+  OutputDir: "data/processed/Router"
+  TestSize: 0.2
+  ValidationSize: 0.5 # split test data to test and validation
+  ClassList: ["Class1", "Class2", Class3]
+
+  Class1: 
+    Path: "Chishi_articles_sample.db"
+    TableName: "articles"
+    TextColumn: "full_text"
+    LabelColumn: "category"
+    TitleColumn: "title"
+    ChunkColumn: "content_blocks"
+    MaxChunkWord: 1000
+    UseChunks: True
+    ChunkRepeatTitle: true
+    BatchSize: 1000
+    MinChunkWords: 10
+    Label: 1
+    Name: "Chishi"
+    AllowedCategories: []
+    # ManualQuestion:
+    #   Path: ""
+    #   Type: ""
+    Shuffle: true
+
+  Class2: 
+    Path: "Hidoctor_articles_sample.db"
+    TableName: "articles"
+    TextColumn: "full_text"
+    LabelColumn: "category"
+    TitleColumn: "title"
+    ChunkColumn: "content_blocks"
+    MaxChunkWord: 1000
+    UseChunks: True
+    ChunkRepeatTitle: true
+    BatchSize: 1000
+    MinChunkWords: 10
+    Label: 2
+    Name: "Hidoctor"
+    AllowedCategories: [
+                        "آشپزی رژیمی و سالم",
+                        "آناتومی و فیزیولوژی انسان",
+                        "اخبار پزشکی",
+                        "استخوان",
+                        "اقدامات پیش از بارداری",
+                        "الزایمر",
+                        "بهداشت و ارتقاء سلامت",
+                        "بیماری ها",
+                        "بیماریهای پوستی",
+                        "بیماری‌های تنفسی",
+                        "تجهیزات پزشکی و آزمایشگاهی",
+                        "جنسی",
+                        "داروها",
+                        "دندانپزشکی",
+                        "دهان و دندان",
+                        "دیابت",
+                        "روانشناسی",
+                        "رپرتاژ",
+                        "زنان",
+                        "زنان و زایمان",
+                        "زیبایی",
+                        "پوست",
+                        "مو",
+                        "سلامت اعضای خانواده",
+                        "سلامت دهان و دندان",
+                        "سلامت زنان",
+                        "سلامت سالمندان",
+                        "سلامت مادر و نوزاد",
+                        "سلامت مردان",
+                        "سلامت کودک",
+                        "سکته مغزی",
+                        "طب سنتی و گیاهان دارویی",
+                        "علمی",
+                        "عمومی",
+                        "عکس های پزشککی و سلامت",
+                        "فشار خون",
+                        "فیزیوتراپی و ارتوپدی",
+                        "قلب و عروق",
+                        "قند خون",
+                        "مراقبت های دوران بارداری",
+                        "مطالب ویژه",
+                        "مغز و اعصاب",
+                        "مفاصل و استخوانها",
+                        "مواد مخدر",
+                        "ناباروری",
+                        "های دکتر پلاس",
+                        "ورزش و سلامتی",
+                        "پرستاری و مامایی",
+                        "پرسش و پاسخ",
+                        "پزشکی",
+                        "پوست و زیبایی",
+                        "پیشگیری از بارداری",
+                        "چاقی و اضافه وزن",
+                        "چشم و چشم پزشکی",
+                        "کرونا",
+                        "کلسترول",
+                        "کلیوی",
+                        "گوارش",
+                        "گوش و شنوایی",
+                        "گوش، حلق و بینی",
+                        "یائسگی"
+                    ]
+    # ManualQuestion:
+    #   Path: ""
+    #   Type: ""
+    Shuffle: true
+
+  Class3: 
+    Path: "Zoomit_articles_sample.db"
+    TableName: "articles"
+    TextColumn: "full_text"
+    LabelColumn: "category"
+    TitleColumn: "title"
+    ChunkColumn: "content_blocks"
+    MaxChunkWord: 1000
+    UseChunks: True
+    ChunkRepeatTitle: true
+    BatchSize: 1000
+    MinChunkWords: 10
+    Label: 3
+    Name: "Zoomit"
+    AllowedCategories: [
+                        "Biographies",
+                        "accessories",
+                        "ai-articles",
+                        "android",
+                        "apple",
+                        "appliances",
+                        "architecture",
+                        "brand-story",
+                        "business",
+                        "buying-guide",
+                        "camera",
+                        "ces",
+                        "computer-learning",
+                        "cryptocurrency",
+                        "desktop",
+                        "economics",
+                        "energy-environment",
+                        "exhibition",
+                        "featured-articles",
+                        "fundamental-science",
+                        "gadget",
+                        "gaming",
+                        "graphic",
+                        "hardware",
+                        "headset",
+                        "health-medical",
+                        "howto",
+                        "infinite-engineering",
+                        "internet-network",
+                        "ios",
+                        "laptop",
+                        "laptop-review",
+                        "linux",
+                        "mac",
+                        "memory",
+                        "mobile",
+                        "mobile-learning",
+                        "mobile-review",
+                        "monitor",
+                        "motherbord",
+                        "os",
+                        "printer-scanner",
+                        "processor",
+                        "samsung",
+                        "scientific",
+                        "security",
+                        "shutter",
+                        "social-network",
+                        "software-application",
+                        "space",
+                        "storage",
+                        "tablet",
+                        "tech",
+                        "tech-iran",
+                        "tv",
+                        "vr-ar",
+                        "wearables",
+                        "websites",
+                        "windows",
+                        "zoomcast",
+                        "zoomplus"
+                    ]
+    # ManualQuestion:
+    #   Path: ""
+    #   Type: ""
+    Shuffle: true
+
