@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
 # 🟢 One4All: Modular Expert System with SLMs
 
 **One4All** is a modular AI system that combines multiple **Specialized Language Models (SLMs)** trained on specific domains using **QLoRA**. Instead of relying on a single large LLM, One4All keeps a lightweight base LLM always loaded and dynamically loads LoRA weights for domain-specific experts. This design enables high performance with minimal hardware requirements.
@@ -132,5 +129,3 @@ Expert: متخصص موبایل (SLM آموزش دیده روی بررسی‌ه�
 ---
 
 ✅ **Status:** پروژه در حال آپلود و انجام تست‌های نهایی است.
-
->>>>>>> 709e9bd (feat: update README to reflect One4All project details and functionality)
